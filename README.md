@@ -22,7 +22,6 @@ don't code? https://friendly-csv.herokuapp.com
 ### todo
 
 1. styles (fonts, buttons, etc)
-2. 'how it works' fold on landing
 3. analytics
 3. let user have leads sent to their email
 4. what else?
