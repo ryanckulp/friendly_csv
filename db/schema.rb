@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913110734) do
+ActiveRecord::Schema.define(version: 20161102041404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
+
+  create_table "batches", force: :cascade do |t|
+    t.integer "error_count"
+    t.integer "lead_count"
+    t.text    "uuid"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.string  "first_name"
+    t.string  "company_name"
+    t.string  "email_address"
+    t.hstore  "extended"
+    t.integer "batch_id"
+  end
+
+  add_index "leads", ["batch_id"], name: "index_leads_on_batch_id", using: :btree
+  add_index "leads", ["extended"], name: "index_leads_on_extended", using: :gin
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

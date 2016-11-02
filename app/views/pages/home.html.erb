@@ -3,5 +3,7 @@
 <div class="jumbotron">
   <h1>Warm up your cold email</h1><br>
   <p>Sanitize popular merge variables before you hit send</p>
-  <button class="btn btn-primary">upload a csv</button>
+  <%= simple_form_for(@batch) do |f| %>
+    <%= f.submit class: "btn btn-primary", value: 'upload a csv' %>
+  <% end %>
 </div>

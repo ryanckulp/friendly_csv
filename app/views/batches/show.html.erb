@@ -1,0 +1,47 @@
+<h1 style="text-align: center">Congrats, you're all set.</h1>
+
+<div class="what-was-done">
+  <h3>We processed <span><%= @lead_count %></span> leads, and had <span><%= @errors || 0 %></span> failures.</h3>
+
+  <ul>
+    <li>We created a new column, 'first name', that has proper casing for all the names you provided.</li>
+    <li>Removed common legal terms like 'Corp, Inc, LLC', etc and their many variants.</li>
+    <li>Skipped leads that were missing an email.</li>
+    <li>If no name was found, we used 'there', so you can still email "hey there..."</li>
+  </ul>
+</div>
+
+<p class="table-header">
+  <%= link_to 'download my leads', "/batches/#{@batch_uuid}.csv", class: 'btn btn-success' %>
+</p>
+
+<table class="table table-striped table-hover">
+
+  <thead>
+    <th>First Name</th>
+    <th>Email Address</th>
+    <th>Company Name</th>
+    <% @extended_attributes.each do |attribute| %>
+      <th><%= attribute %></th>
+    <% end %>
+  </thead>
+
+  <tbody>
+    <% @leads[0..15].each do |lead| %>
+      <tr>
+        <td class="sanitized"><%= lead.first_name %></td>
+        <td class="sanitized"><%= lead.email_address %></td>
+        <td class="sanitized"><%= lead.company_name %></td>
+
+        <% extended_attributes = lead.extended %>
+        <% extended_attributes.each do |attribute| %>
+          <td><%= attribute[1] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </tbody>
+
+</table>
+
+<p class="table-footer">Don't worry, the rest of your leads are here, just hidden to save page load time.</p>

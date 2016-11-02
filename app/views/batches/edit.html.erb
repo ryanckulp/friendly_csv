@@ -1,0 +1,20 @@
+<%= form_tag import_leads_path(batch_id: @batch.id), id: 'import-form', class: 'gap', multipart: true do %>
+
+<label class="btn btn-lg btn-default btn-file">
+    <h1>Import your leads</h1>
+    Click to Upload
+    <%= file_field_tag :file %>
+</label>
+  <div class="row gap">
+    <%= submit_tag "Sanitize", class: "btn btn-lg btn-primary", id: 'submit', style: 'display:none' %>
+  </div>
+<% end %>
+
+
+<script>
+  $(function() {
+    $('input#file').click(function() {
+      $('#submit').show();
+    })
+  })
+</script>
