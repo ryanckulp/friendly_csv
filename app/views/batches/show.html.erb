@@ -27,7 +27,7 @@
   </thead>
 
   <tbody>
-    <% @leads[0..15].each do |lead| %>
+    <% @leads.each do |lead| %>
       <tr>
         <td class="sanitized"><%= lead.first_name %></td>
         <td class="sanitized"><%= lead.email_address %></td>

@@ -11,14 +11,14 @@ class BatchesController < ApplicationController
 
   def show
     @batch_uuid = @batch.uuid
-    @leads = @batch.leads
+    @leads = @batch.leads[0..15]
     @lead_count = @batch.lead_count
     @error_count = @batch.error_count
     @extended_attributes = @batch.leads.first.extended.keys
 
     respond_to do |format|
       format.html
-      format.csv { send_data @leads.to_csv, filename: "leads-#{Date.today}.csv" }
+      format.csv { send_data @batch.leads.to_csv, filename: "leads-#{Date.today}.csv" }
     end
   end
 
