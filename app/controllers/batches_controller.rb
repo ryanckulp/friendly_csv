@@ -29,7 +29,7 @@ class BatchesController < ApplicationController
 
   def progress
     completed = @batch.leads.count
-    render json: {status: 'ok', completed: completed, intended: @batch.lead_count}
+    render json: {status: 'ok', completed: completed}
   end
 
   def create

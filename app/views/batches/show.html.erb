@@ -1,13 +1,15 @@
+<% meta title: "View your Leads", description: "Download your cold email leads." %>
+
 <h1 style="text-align: center">Congrats, you're all set.</h1>
 
 <div class="what-was-done">
   <h3>We processed <span><%= @lead_count %></span> leads, and had <span><%= @errors || 0 %></span> failures.</h3>
 
   <ul>
-    <li>We created a new column, 'first name', that has proper casing for all the names you provided.</li>
+    <li>We created a column, 'first name', that has proper casing for all the names you provided.</li>
     <li>Removed common legal terms like 'Corp, Inc, LLC', etc and their many variants.</li>
     <li>Skipped leads that were missing an email.</li>
-    <li>If no name was found, we used 'there', so you can still email "hey there..."</li>
+    <li>If no name was found we used 'there', so you can still email "hey there..."</li>
   </ul>
 </div>
 
@@ -39,7 +41,6 @@
         <% end %>
       </tr>
     <% end %>
-
   </tbody>
 
 </table>
