@@ -7,6 +7,9 @@ body {font-family: Helvetica, Arial}
 .navbar {background-color: transparent; border: none}
 .navbar-toggle {border: none}
 
+// Landing
+.pitch {height: 300px}
+
 // Import
 #import-form {text-align: center}
 input#file {display: none}
@@ -27,6 +30,8 @@ td.sanitized {background-color: lightgreen}
 
 // iPhone 4
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	.pitch {height: 350px}
+
 	// insert
 }
 
