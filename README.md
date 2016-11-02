@@ -3,7 +3,9 @@ sanitize cold email merge variables before you hit send.
 
 don't code? https://friendly-csv.herokuapp.com
 
-![santize csv merge variables](https://raw.githubusercontent.com/ryanckulp/friendly_csv/master/app/assets/images/sanitize-in-action.gif "Sanitize a CSV")
+<p align="center">
+  <img src=https://raw.githubusercontent.com/ryanckulp/friendly_csv/master/app/assets/images/sanitize-in-action.gif" alt="Sanitize a CSV"/>
+</p>
 
 ### why?
 
