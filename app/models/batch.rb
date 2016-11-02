@@ -1,5 +1,5 @@
 class Batch < ActiveRecord::Base
-  has_many :leads
+  has_many :leads, dependent: :destroy
 
   before_create :generate_uuid
   def generate_uuid
