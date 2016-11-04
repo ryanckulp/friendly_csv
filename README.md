@@ -22,6 +22,5 @@ don't code? https://friendly-csv.herokuapp.com
 ### todo
 
 1. styles (fonts, buttons, etc)
-3. analytics
-3. let user have leads sent to their email
-4. what else?
+2. let user send leads to their email
+3. what else?

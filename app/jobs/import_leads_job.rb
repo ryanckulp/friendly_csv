@@ -3,7 +3,7 @@ class ImportLeadsJob
 
   COMPANY_LEGALESE = [', co.', ' co.', ' co',
                       ', Co.', ' Co.', ' Co',
-                      '.COM.', '.Com.', '.com.', '.com',
+                      '.COM.', '.Com.', '.Com', '.com.', '.com',
                       ', corp.', ' corp.', ' corp',
                       ', Corp.', ' Corp.', ' Corp',
                       ', inc.', ' inc.', ' inc',
