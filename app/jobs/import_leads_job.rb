@@ -27,17 +27,24 @@ class ImportLeadsJob
 
   def perform(file, batch_id, raw_lead = {}, sanitized_lead = {})
     errors = 0
+    duplicates = 0
 
     CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8', skip_blanks: true, skip_lines: /^(?:,\s*)+$/) do |row|
       row.to_hash.each_pair { |k,v| raw_lead.merge!({k.downcase.strip => v})}
 
-      if should_skip_lead?(raw_lead)
+      if no_email_found?(raw_lead)
         errors += 1 # should store each error type separately
         break
       end
 
       prepare_name(raw_lead, sanitized_lead)
       prepare_email(raw_lead, sanitized_lead)
+
+      if lead_already_exists?(sanitized_lead, batch_id)
+        duplicates += 1
+        break
+      end
+
       prepare_company(raw_lead, sanitized_lead)
       sanitize_company(sanitized_lead)
 
@@ -56,26 +63,34 @@ class ImportLeadsJob
       end
     end
 
-    Batch.find(batch_id).update(error_count: errors)
+    Batch.find(batch_id).update(error_count: errors, duplicate_count: duplicates)
   end
 
-  def should_skip_lead?(raw)
-    exists = !!raw['email'] || !!raw['email address'] || !!raw['email_address']
-    !exists
+  def no_email_found?(raw)
+    email = !!raw['email'] || !!raw['email address'] || !!raw['email_address']
+    !email
+  end
+
+  def lead_already_exists?(sanitized, batch_id)
+    batch = Batch.find(batch_id)
+    lead = batch.leads.find_by(email_address: sanitized['email_address'])
+    lead.present?
   end
 
   def prepare_name(raw, sanitized)
     first_name = case
                   when !!raw['contact'] && raw['contact'].length > 1
                     raw['contact'].split[0]
-                   when !!raw['full name'] && raw['full name'].length > 1
-                     raw['full name'].split[0]
-                   when !!raw['full_name'] && raw['full_name'].length > 1
-                     raw['full_name'].split[0]
+                  when !!raw['first'] && raw['first'].length > 1
+                    raw['first'].split[0]
                    when !!raw['first name'] && raw['first name'].length > 1
                      raw['first name'].split[0]
                    when !!raw['first_name'] && raw['first_name'].length > 1
                      raw['first_name'].split[0]
+                   when !!raw['full name'] && raw['full name'].length > 1
+                     raw['full name'].split[0]
+                   when !!raw['full_name'] && raw['full_name'].length > 1
+                     raw['full_name'].split[0]
                    when !!raw['name'] && raw['name'].length > 1
                      raw['name'].split[0]
                    when !!raw['person'] && raw['person'].length > 1
