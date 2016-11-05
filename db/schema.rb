@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161102041404) do
+ActiveRecord::Schema.define(version: 20161105203342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20161102041404) do
     t.integer "error_count"
     t.integer "lead_count"
     t.text    "uuid"
+    t.integer "duplicate_count"
   end
 
   create_table "leads", force: :cascade do |t|
