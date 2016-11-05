@@ -3,7 +3,7 @@
 <h1 style="text-align: center">Congrats, you're all set.</h1>
 
 <div class="what-was-done">
-  <h3>We processed <span><%= @lead_count %></span> leads, and had <span><%= @errors || 0 %></span> failures.</h3>
+  <h3>We processed <span><%= @lead_count %></span> leads, found <span><%= @duplicate_count %></span> duplicates, and had <span><%= @errors || 0 %></span> failures.</h3>
 
   <ul>
     <li>We created a column, 'first name', that has proper casing for all the names you provided.</li>

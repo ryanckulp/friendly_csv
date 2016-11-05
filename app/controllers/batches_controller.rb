@@ -13,6 +13,7 @@ class BatchesController < ApplicationController
     @batch_uuid = @batch.uuid
     @leads = @batch.leads[0..15]
     @lead_count = @batch.lead_count
+    @duplicate_count = @batch.duplicate_count
     @error_count = @batch.error_count
     @extended_attributes = @batch.leads.first.extended.keys
 
