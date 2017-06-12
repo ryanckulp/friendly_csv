@@ -15,7 +15,7 @@ class BatchesController < ApplicationController
     @lead_count = @batch.lead_count
     @duplicate_count = @batch.duplicate_count
     @error_count = @batch.error_count
-    @extended_attributes = @batch.leads.first.extended.keys
+    @extended_attributes = @leads.try(:first).try(:extended).try(:keys) || []
 
     respond_to do |format|
       format.html
