@@ -8,7 +8,7 @@ class ImportLeadsJob
                       ', Corp.', ' Corp.', ' Corp',
                       ', inc.', ' inc.', ' inc',
                       ', Inc.', ' Inc.', ' Inc', ', INC.', ', INC',
-                      ' KS,',
+                      ' KS,', ' Ks,',
                       ', Limited.', ', Limited', ' Limited', ', limited.', ', limited', ' limited',
                       ', llc.', ' llc.', ' llc', ', l.l.c.', ' l.l.c.', ' l.l.c',
                       ', LLC.', ' LLC.', ' LLC', ', L.L.C.', ' L.L.C.', ' l.l.c', ', Llc.', ' Llc.', ', Llc', ' Llc',
@@ -16,7 +16,7 @@ class ImportLeadsJob
                       ', LTD.', ' LTD.', ' LTD', ', Ltd.', ', Ltd', ',Ltd.', ', L.T.D.', ' L.T.D.', ' L.T.D', ', L.td.', ' L.td.', ' L.td', ',Ltd,', ',Ltd', ' Ltd',
                       ' N.A.',
                       ', pty.', ' pty.', ' pty', ', PTY.', ' PTY.', ' PTY', ', Pty.', ' Pty.', 'Pty',
-                      ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)'
+                      ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)', ' (Usa)'
                       ]
 
   # could be used to update incorrectly titleized names
@@ -144,7 +144,7 @@ class ImportLeadsJob
                         raw['business_name']
                     end
 
-    sanitized['company_name'] = company_name.nil? ? 'your company' : company_name.titleize
+    sanitized['company_name'] = company_name.nil? ? 'your company' : company_name.gsub(/\b\w/, &:capitalize)
   end
 
   def sanitize_company(sanitized)
