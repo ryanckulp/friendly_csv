@@ -16,7 +16,7 @@ class ImportLeadsJob
                       ', LTD.', ' LTD.', ' LTD', ', Ltd.', ', Ltd', ',Ltd.', ', L.T.D.', ' L.T.D.', ' L.T.D', ', L.td.', ' L.td.', ' L.td', ',Ltd,', ',Ltd', ' Ltd',
                       ', pty.', ' pty.', ' pty',
                       ', PTY.', ' PTY.', ' PTY', ', Pty.', ' Pty.', 'Pty',
-                      ' (USA)', ' (usa)', '(USA)', '(usa)'
+                      ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)'
                       ]
 
   # could be used to update incorrectly titleized names
