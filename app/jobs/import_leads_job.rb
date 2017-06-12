@@ -7,15 +7,15 @@ class ImportLeadsJob
                       ', corp.', ' corp.', ' corp',
                       ', Corp.', ' Corp.', ' Corp',
                       ', inc.', ' inc.', ' inc',
-                      ', Inc.', ' Inc.', ' Inc',
-                      'KS, ', 'KS,',
+                      ', Inc.', ' Inc.', ' Inc', ', INC.', ', INC',
+                      ' KS,',
                       ', Limited.', ', Limited', ' Limited', ', limited.', ', limited', ' limited',
                       ', llc.', ' llc.', ' llc', ', l.l.c.', ' l.l.c.', ' l.l.c',
                       ', LLC.', ' LLC.', ' LLC', ', L.L.C.', ' L.L.C.', ' l.l.c', ', Llc.', ' Llc.', ', Llc', ' Llc',
                       ', ltd.', ' ltd.', ' ltd', ', l.t.d.', ' l.t.d.', ' l.t.d', ', l.td.', ' l.td.', ' l.td',
                       ', LTD.', ' LTD.', ' LTD', ', Ltd.', ', Ltd', ',Ltd.', ', L.T.D.', ' L.T.D.', ' L.T.D', ', L.td.', ' L.td.', ' L.td', ',Ltd,', ',Ltd', ' Ltd',
-                      ', pty.', ' pty.', ' pty',
-                      ', PTY.', ' PTY.', ' PTY', ', Pty.', ' Pty.', 'Pty',
+                      ' N.A.',
+                      ', pty.', ' pty.', ' pty', ', PTY.', ' PTY.', ' PTY', ', Pty.', ' Pty.', 'Pty',
                       ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)'
                       ]
 
