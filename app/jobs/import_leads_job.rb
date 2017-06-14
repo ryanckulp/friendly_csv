@@ -3,11 +3,11 @@ class ImportLeadsJob
 
   COMPANY_LEGALESE = [', co.', ' co.', ' co',
                       ', Co.', ' Co.', ' Co',
-                      '.COM.', '.Com.', '.Com', '.com.', '.com',
+                      '.COM.', '.COM', '.Com.', '.Com', '.com.', '.com',
                       ', corp.', ' corp.', ' corp',
                       ', Corp.', ' Corp.', ' Corp',
                       ', inc.', ' inc.', ' inc',
-                      ', Inc.', ' Inc.', ' Inc', ', INC.', ', INC',
+                      ', Inc.', ' Inc.', ' Inc', ', INC.', ', INC', 'INC.', 'INC',
                       ' KS,', ' Ks,',
                       ', Limited.', ', Limited', ' Limited', ', limited.', ', limited', ' limited',
                       ', llc.', ' llc.', ' llc', ', l.l.c.', ' l.l.c.', ' l.l.c',
@@ -16,7 +16,9 @@ class ImportLeadsJob
                       ', LTD.', ' LTD.', ' LTD', ', Ltd.', ', Ltd', ',Ltd.', ', L.T.D.', ' L.T.D.', ' L.T.D', ', L.td.', ' L.td.', ' L.td', ',Ltd,', ',Ltd', ' Ltd',
                       ' N.A.',
                       ', pty.', ' pty.', ' pty', ', PTY.', ' PTY.', ' PTY', ', Pty.', ' Pty.', 'Pty',
-                      ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)', ' (Usa)'
+                      ' Sps', ' SPS', ' Sss',
+                      ' (USA)', ' (usa)', '(USA)', '(usa)', ' (U.S.A.)', ' (Usa)', ' Usa',
+                      '  ', ', ', ' ,', ','
                       ]
 
   # could be used to update incorrectly titleized names
@@ -32,7 +34,7 @@ class ImportLeadsJob
     duplicates = 0
 
     CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8', skip_blanks: true, skip_lines: /^(?:,\s*)+$/) do |row|
-      row.to_hash.each_pair { |k,v| raw_lead.merge!({k.downcase.strip => v})}
+      row.to_hash.each_pair { |k,v| raw_lead.merge!({k.strip => v})}
 
       if no_email_found?(raw_lead)
         errors += 1 # should store each error type separately
@@ -53,7 +55,7 @@ class ImportLeadsJob
       lead_params = {
         batch_id: batch_id,
         first_name: sanitized_lead['first_name'],
-        company_name: sanitized_lead['company_name'],
+        company_name: sanitized_lead['company_name'].strip,
         email_address: sanitized_lead['email_address'],
         extended: stash_extended(raw_lead)
       }
@@ -150,6 +152,12 @@ class ImportLeadsJob
   def sanitize_company(sanitized)
     COMPANY_LEGALESE.each do |legalese|
       sanitized['company_name'].gsub!(legalese, '')
+    end
+
+    if sanitized['company_name'] == sanitized['company_name'].upcase
+      sanitized['company_name'] = sanitized['company_name'].titleize
+    else
+      sanitized['company_name'] = sanitized['company_name'].gsub(/\b\w/, &:capitalize)
     end
   end
 
