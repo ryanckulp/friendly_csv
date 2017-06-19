@@ -38,7 +38,7 @@ class ImportLeadsJob
 
       if no_email_found?(raw_lead)
         errors += 1 # should store each error type separately
-        break
+        next
       end
 
       prepare_name(raw_lead, sanitized_lead)
@@ -46,7 +46,7 @@ class ImportLeadsJob
 
       if lead_already_exists?(sanitized_lead, batch_id)
         duplicates += 1
-        break
+        next
       end
 
       prepare_company(raw_lead, sanitized_lead)
@@ -71,7 +71,7 @@ class ImportLeadsJob
   end
 
   def no_email_found?(raw)
-    email = !!raw['email'] || !!raw['email address'] || !!raw['email_address']
+    email = !!raw['Email'] || !!raw['Email Address'] || !!raw['Email_Address'] || !!raw['email'] || !!raw['email address'] || !!raw['email_address']
     !email
   end
 
@@ -91,10 +91,18 @@ class ImportLeadsJob
                      raw['first name'].split[0]
                    when !!raw['first_name'] && raw['first_name'].length > 1
                      raw['first_name'].split[0]
+                   when !!raw['Full Name'] && raw['Full Name'].length > 1
+                     full_name_array = raw['Full Name'].split
+                     full_name_array.delete_at(0) if full_name_array.first.length
+                     full_name_array[0]
                    when !!raw['full name'] && raw['full name'].length > 1
-                     raw['full name'].split[0]
+                     full_name_array = raw['full name'].split
+                     full_name_array.delete_at(0) if full_name_array.first.length
+                     full_name_array[0]
                    when !!raw['full_name'] && raw['full_name'].length > 1
-                     raw['full_name'].split[0]
+                     full_name_array = raw['full_name'].split
+                     full_name_array.delete_at(0) if full_name_array.first.length
+                     full_name_array[0]
                    when !!raw['name'] && raw['name'].length > 1
                      raw['name'].split[0]
                    when !!raw['person'] && raw['person'].length > 1
@@ -106,6 +114,10 @@ class ImportLeadsJob
 
   def prepare_email(raw, sanitized)
     email_address = case
+                      when !!raw['Email'] && raw['Email'].length > 1
+                        raw['Email']
+                      when !!raw['Email Address'] && raw['Email Address'].length > 1
+                        raw['Email Address']
                       when !!raw['email'] && raw['email'].length > 1
                         raw['email']
                       when !!raw['email address'] && raw['email address'].length > 1
@@ -114,7 +126,7 @@ class ImportLeadsJob
                         raw['email_address']
                     end
 
-    sanitized['email_address'] = email_address.downcase
+    sanitized['email_address'] = email_address.downcase.strip
   end
 
   def prepare_city(raw, sanitized)
@@ -144,6 +156,8 @@ class ImportLeadsJob
                         raw['business name']
                       when !!raw['business_name'] && raw['business_name'].length > 1
                         raw['business_name']
+                      when !!raw['Office Name'] && raw['Office Name'].length > 1
+                        raw['Office Name']
                     end
 
     sanitized['company_name'] = company_name.nil? ? 'your company' : company_name.gsub(/\b\w/, &:capitalize)
