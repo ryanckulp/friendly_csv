@@ -122,7 +122,7 @@ class ImportLeadsJob
                         raw['Emails'].try(:split, ';').try(:first)
                       when !!raw['Email Address'] && raw['Email Address'].length > 1
                         raw['Email Address']
-                      when !!raw['email'] && raw['email'].length > 1
+                      when !!rawimport_leads_job.rb['email'] && raw['email'].length > 1
                         raw['email']
                       when !!raw['email address'] && raw['email address'].length > 1
                         raw['email address']
@@ -164,8 +164,11 @@ class ImportLeadsJob
                         raw['Office Name']
                     end
 
-    company_name = company_name.gsub(/\b\w/, &:capitalize)
-    company_name = 'your company' if company_name.nil?
+    if company_name.nil?
+      company_name = 'your company'
+    else
+      company_name = company_name.gsub(/\b\w/, &:capitalize)
+    end
 
     sanitized['company_name'] = company_name
   end
