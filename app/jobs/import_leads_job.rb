@@ -55,7 +55,7 @@ class ImportLeadsJob
       lead_params = {
         batch_id: batch_id,
         first_name: sanitized_lead['first_name'],
-        company_name: sanitized_lead['company_name'].strip,
+        company_name: sanitized_lead['company_name'],
         email_address: sanitized_lead['email_address'],
         extended: stash_extended(raw_lead)
       }
@@ -148,6 +148,8 @@ class ImportLeadsJob
     company_name = case
                       when !!raw['company'] && raw['company'].length > 1
                         raw['company']
+                      when !!raw['Company'] && raw['Company'].length > 1
+                        raw['Company']
                       when !!raw['company name'] && raw['company name'].length > 1
                         raw['company name']
                       when !!raw['copmany name'] && raw['copmany name'].length > 1 # people make typos
@@ -170,7 +172,7 @@ class ImportLeadsJob
       company_name = company_name.gsub(/\b\w/, &:capitalize)
     end
 
-    sanitized['company_name'] = company_name
+    sanitized['company_name'] = company_name.try(:strip)
   end
 
   def sanitize_company(sanitized)
