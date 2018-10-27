@@ -1,11 +1,11 @@
 class ImportLeadsJob
   include SuckerPunch::Job
 
-  COMPANY_LEGALESE = [', co.', ' co.', ' co',
-                      ', Co.', ' Co.', ' Co',
-                      '.COM.', '.COM', '.Com.', '.Com', '.com.', '.com',
+  COMPANY_LEGALESE = ['.COM.', '.COM', '.Com.', '.Com', '.com.', '.com',
                       ', corp.', ' corp.', ' corp',
                       ', Corp.', ' Corp.', ' Corp',
+                      ', co.', ' co.', ' co',
+                      ', Co.', ' Co.', ' Co',
                       ', inc.', ' inc.', ' inc',
                       ', Inc.', ' Inc.', ' Inc', ', INC.', ', INC', 'INC.', 'INC',
                       ' KS,', ' Ks,',
@@ -116,17 +116,17 @@ class ImportLeadsJob
 
   def prepare_email(raw, sanitized)
     email_address = case
-                      when !!raw['Email'] && raw['Email'].length > 1
+                      when !!raw['Email'] && raw['Email'].include?('@')
                         raw['Email']
-                      when !!raw['Emails'] && raw['Emails'].length > 1 # builtwith.com format
+                      when !!raw['Emails'] && raw['Emails'].include?('@') # builtwith.com format
                         raw['Emails'].try(:split, ';').try(:first)
-                      when !!raw['Email Address'] && raw['Email Address'].length > 1
+                      when !!raw['Email Address'] && raw['Email Address'].include?('@')
                         raw['Email Address']
-                      when !!rawimport_leads_job.rb['email'] && raw['email'].length > 1
+                      when !!raw['email'] && raw['email'].include?('@')
                         raw['email']
-                      when !!raw['email address'] && raw['email address'].length > 1
+                      when !!raw['email address'] && raw['email address'].include?('@')
                         raw['email address']
-                      when !!raw['email_address'] && raw['email_address'].length > 1
+                      when !!raw['email_address'] && raw['email_address'].include?('@')
                         raw['email_address']
                     end
 
