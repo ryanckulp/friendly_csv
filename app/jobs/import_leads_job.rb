@@ -105,6 +105,8 @@ class ImportLeadsJob
                      full_name_array[0]
                    when !!raw['name'] && raw['name'].length > 1
                      raw['name'].split[0]
+                   when !!raw['Name'] && raw['Name'].length > 1
+                     raw['Name'].split[0]
                    when !!raw['person'] && raw['person'].length > 1
                      raw['person'].split[0]
                  end
