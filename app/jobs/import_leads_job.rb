@@ -118,6 +118,8 @@ class ImportLeadsJob
     email_address = case
                       when !!raw['Email'] && raw['Email'].length > 1
                         raw['Email']
+                      when !!raw['Emails'] && raw['Emails'].length > 1 # builtwith.com format
+                        raw['Emails'].try(:split, ';').try(:first)
                       when !!raw['Email Address'] && raw['Email Address'].length > 1
                         raw['Email Address']
                       when !!raw['email'] && raw['email'].length > 1
@@ -128,7 +130,7 @@ class ImportLeadsJob
                         raw['email_address']
                     end
 
-    sanitized['email_address'] = email_address.downcase.strip
+    sanitized['email_address'] = email_address.try(:downcase).try(:strip)
   end
 
   def prepare_city(raw, sanitized)
@@ -162,10 +164,15 @@ class ImportLeadsJob
                         raw['Office Name']
                     end
 
-    sanitized['company_name'] = company_name.nil? ? 'your company' : company_name.gsub(/\b\w/, &:capitalize)
+    company_name = company_name.gsub(/\b\w/, &:capitalize)
+    company_name = 'your company' if company_name.nil?
+
+    sanitized['company_name'] = company_name
   end
 
   def sanitize_company(sanitized)
+    return if sanitized['company_name'] == 'your company' # default value
+
     COMPANY_LEGALESE.each do |legalese|
       sanitized['company_name'].gsub!(legalese, '')
     end
