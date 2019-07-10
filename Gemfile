@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
-ruby "2.1.5"
+ruby "2.5.0"
 
 # included
+gem 'actionpack', '4.2.3'
+
 gem 'rails', '4.2.3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -11,8 +13,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+
 # speedrail
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', '3.2.2' #, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem "font-awesome-rails"
 gem 'simple_form'
 gem 'jquery-turbolinks'
