@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105203342) do
+ActiveRecord::Schema.define(version: 20190710161250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "batches", force: :cascade do |t|
-    t.integer "error_count"
-    t.integer "lead_count"
-    t.text    "uuid"
-    t.integer "duplicate_count"
+    t.integer  "error_count"
+    t.integer  "lead_count"
+    t.text     "uuid"
+    t.integer  "duplicate_count"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "leads", force: :cascade do |t|
