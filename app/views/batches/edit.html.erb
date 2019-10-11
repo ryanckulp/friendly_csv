@@ -6,7 +6,7 @@
     <%= file_field_tag :file %>
 </label>
   <div class="row gap">
-    <%= submit_tag "Sanitize", class: "btn btn-lg btn-primary", id: 'submit', style: 'display:none' %>
+    <%= submit_tag "Sanitize", class: "btn btn-lg btn-primary", id: 'submit', style: 'display:none', data: {'disable-with' => 'Please wait...'} %>
   </div>
 <% end %>
 
