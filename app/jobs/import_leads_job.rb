@@ -34,7 +34,7 @@ class ImportLeadsJob
     duplicates = 0
 
     CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8', skip_blanks: true, skip_lines: /^(?:,\s*)+$/) do |row|
-      row.to_hash.each_pair { |k,v| raw_lead.merge!({k.strip => v})}
+      row.to_hash.each_pair { |k,v| raw_lead.merge!({k.try(:strip) => v})}
 
       if no_email_found?(raw_lead)
         errors += 1 # should store each error type separately
