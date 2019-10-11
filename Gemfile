@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 ruby "2.5.0"
 
 # included
-gem 'actionpack', '4.2.3'
+gem 'actionpack', '4.2.10'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.10'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -23,7 +23,7 @@ gem 'devise'
 gem 'gravatarify', '~> 3.0.0'
 gem 'metamagic' # easily insert metatags for SEO / opengraph
 gem 'rails_12factor'
-gem 'pg'
+gem 'pg', '~> 0.15'
 gem 'bootstrap-sass'
 gem 'seed_dump' # import / export seed data from existing db (https://github.com/rroblak/seed_dump)
 gem 'figaro' # private ENV vars for safe deployment

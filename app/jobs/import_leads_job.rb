@@ -36,8 +36,13 @@ class ImportLeadsJob
     CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8', skip_blanks: true, skip_lines: /^(?:,\s*)+$/) do |row|
       row.to_hash.each_pair { |k,v| raw_lead.merge!({k.try(:strip) => v})}
 
+      puts raw_lead
       if no_email_found?(raw_lead)
         errors += 1 # should store each error type separately
+
+        if errors == 500
+          # binding.pry
+        end
         next
       end
 
@@ -71,7 +76,7 @@ class ImportLeadsJob
   end
 
   def no_email_found?(raw)
-    email = !!raw['Email'] || !!raw['Email Address'] || !!raw['Email_Address'] || !!raw['email'] || !!raw['email address'] || !!raw['email_address']
+    email = !!raw['Emails'] || !!raw['Email'] || !!raw['Email Address'] || !!raw['Email_Address'] || !!raw['email'] || !!raw['email address'] || !!raw['email_address']
     !email
   end
 
